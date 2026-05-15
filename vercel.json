@@ -1,13 +1,5 @@
 {
   "version": 2,
-  "experimentalServices": {
-    "frontend": {
-      "rootDirectory": "frontend"
-    },
-    "backend": {
-      "rootDirectory": "backend"
-    }
-  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/backend/$1" }
   ]
