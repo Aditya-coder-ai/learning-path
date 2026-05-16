@@ -1,14 +1,24 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import os
+import redis.asyncio as redis
+from fastapi_limiter import FastAPILimiter
 from app.api import auth, quiz, workflow
 from app.init_db import init
 
 app = FastAPI(title="LearnPath AI", version="0.1.0")
 
 @app.on_event("startup")
-def on_startup():
+async def on_startup():
     init()
+    redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+    try:
+        redis_client = redis.from_url(redis_url, encoding="utf-8", decode_responses=True)
+        await FastAPILimiter.init(redis_client)
+        print("Rate Limiter Initialized")
+    except Exception as e:
+        print(f"Redis initialization failed: {e}")
 
 app.add_middleware(
     CORSMiddleware,

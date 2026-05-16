@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.db import get_db
 from app.models.schemas import UserRegister, UserLogin, Token
+from fastapi_limiter.depends import RateLimiter
 
 router = APIRouter()
 pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -34,7 +35,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
 
 
-@router.post("/register", response_model=Token)
+@router.post("/register", response_model=Token, dependencies=[Depends(RateLimiter(times=5, seconds=60))])
 def register(body: UserRegister, db: Session = Depends(get_db)):
     from sqlalchemy import text
     existing = db.execute(text("SELECT id FROM users WHERE email = :email"), {"email": body.email}).fetchone()
@@ -51,7 +52,7 @@ def register(body: UserRegister, db: Session = Depends(get_db)):
     return {"access_token": token, "token_type": "bearer"}
 
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=Token, dependencies=[Depends(RateLimiter(times=5, seconds=60))])
 def login(body: UserLogin, db: Session = Depends(get_db)):
     from sqlalchemy import text
     row = db.execute(text("SELECT id, hashed_password FROM users WHERE email = :email"), {"email": body.email}).fetchone()
