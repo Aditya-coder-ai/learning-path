@@ -16,7 +16,7 @@ export default function QuizPage() {
     setToken(localStorage.getItem("token"));
   }, []);
 
-  const handleAuth = async (e) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     const endpoint = authMode === "register" ? "register" : "login";
     const body: any = { email, password };

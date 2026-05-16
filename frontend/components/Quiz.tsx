@@ -33,7 +33,7 @@ const GOALS = [
   "oop_inheritance",
 ];
 
-export default function Quiz({ onSubmit }) {
+export default function Quiz({ onSubmit }: { onSubmit: (id: string) => void }) {
   const [answers, setAnswers] = useState<number[]>(new Array(QUESTIONS.length).fill(-1));
   const [goal, setGoal] = useState(GOALS[0]);
   const [loading, setLoading] = useState(false);

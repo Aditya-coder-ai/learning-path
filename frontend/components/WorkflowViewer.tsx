@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function WorkflowViewer({ workflowId }) {
+export default function WorkflowViewer({ workflowId }: { workflowId: string }) {
   const [workflow, setWorkflow] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
