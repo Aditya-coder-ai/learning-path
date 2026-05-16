@@ -11,7 +11,7 @@ export default function WorkflowViewer({ workflowId }) {
     const fetchWorkflow = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await fetch(`http://localhost:8000/api/workflow/${workflowId}`, {
+        const res = await fetch(`/api/workflow/${workflowId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("Not found");
@@ -29,7 +29,7 @@ export default function WorkflowViewer({ workflowId }) {
   const completeStep = async (stepId: number) => {
     const token = localStorage.getItem("token");
     try {
-      await fetch(`http://localhost:8000/api/workflow/${workflowId}/complete/${stepId}`, {
+      await fetch(`/api/workflow/${workflowId}/complete/${stepId}`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },
       });

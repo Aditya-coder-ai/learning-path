@@ -23,7 +23,7 @@ export default function QuizPage() {
     if (authMode === "register") body.name = name;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/auth/${endpoint}`, {
+      const res = await fetch(`/api/auth/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -37,7 +37,7 @@ export default function QuizPage() {
         alert(data.detail || "Auth failed");
       }
     } catch {
-      alert("Backend not running at localhost:8000");
+      alert("Backend not reachable or not running.");
     }
   };
 

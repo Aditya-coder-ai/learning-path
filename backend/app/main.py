@@ -2,8 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import auth, quiz, workflow
+from app.init_db import init
 
 app = FastAPI(title="LearnPath AI", version="0.1.0")
+
+@app.on_event("startup")
+def on_startup():
+    init()
 
 app.add_middleware(
     CORSMiddleware,

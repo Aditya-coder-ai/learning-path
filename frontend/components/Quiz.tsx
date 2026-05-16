@@ -52,7 +52,7 @@ export default function Quiz({ onSubmit }) {
     setLoading(true);
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://localhost:8000/api/quiz/submit", {
+      const res = await fetch("/api/quiz/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
