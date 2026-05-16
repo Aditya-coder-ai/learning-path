@@ -28,11 +28,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
-app.include_router(quiz.router, prefix="/api/quiz", tags=["quiz"])
-app.include_router(workflow.router, prefix="/api/workflow", tags=["workflow"])
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
+app.include_router(quiz.router, prefix="/quiz", tags=["quiz"])
+app.include_router(workflow.router, prefix="/workflow", tags=["workflow"])
 
 
-@app.get("/api/health")
+@app.get("/health")
 def health():
     return {"status": "ok", "service": "learnpath-ai"}
